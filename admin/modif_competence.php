@@ -1,16 +1,31 @@
-<?php 
-	require '../connexion/connexion.php';
+<?php require '../connexion/connexion.php'; ?>
+<?php
+
+// Gestion des contenus, mise à jour d'une compétence
+	if(isset($_POST['competence'])){
+		$competence = addslashes($_POST['competence']);
+		$id_competence = $_POST['id_competence'];
+		$pdoCV->exec(" UPDATE t_competences SET competence='$competence' WHERE id_competence='$id_competence' ");
+		header('location: ../admin/competence.php');
+		exit();
+	}
+
+// Je recupere la competence
+	$id_competence = $_GET['id_competence']; // par l'id et $_GET
+	$sql = $pdoCV->query(" SELECT * FROM t_competences WHERE id_competence = '$id_competence' "); // la requête égale à l'id
+	$ligne_competence = $sql->fetch(); // 
+	
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 	<?php
 			$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '1' ");
 			$ligne = $sql->fetch(); // va chercher !
-		?>
+	?>
 	
-    <meta charset="utf-8">
+   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
     <meta name="description" content="">
@@ -18,11 +33,13 @@
 
     <title><?= $ligne['prenom'].' '.$ligne['nom']; ?></title>
 
-    <!-- Bootstrap Core CSS -->
+     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="css/competence.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,7 +52,7 @@
 
 <body>
 
-    <div id="wrapper">
+     <div id="wrapper">
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
@@ -72,16 +89,54 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Site CV de <?= $ligne['prenom'].' '.$ligne['nom']; ?></h1>
-							
-							<?php 
-								$datetime = date("d-m-Y H:i:s");
-								echo $datetime; 
-							?>
-						
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+						<h2>Modification d'une compétence</h2>
+                        <table class="table table-striped">
+							<thead> 
+								<tr class="info">
+									<th scope="col">Compétences</th>
+									<th scope="col">Modifier</th>
+									<th scope="col">Supprimer</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php while($ligne = $sql->fetch()){ ?>
+								<tr>
+									<td>
+										<?= $ligne['competence']; ?>
+									</td>
+									<td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td><a href="competence.php?id_competence=<?= $ligne['id_competence']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+								</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+						<form class="form-horizontal" method="post" action="modif_competence.php">
+							<fieldset>
+
+							<!-- Form Name -->
+							<legend>Form Name</legend>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label for="competence" class="col-md-4 control-label" >Compétence</label>  
+								<div class="col-md-4">
+									<input name="competence" type="text" class="form-control input-md" value="<?= $ligne_competence['competence']; ?>">
+									<input name="id_competence" hidden value="<?= $ligne_competence['id_competence']; ?>">
+								</div>
+							</div>
+
+							<!-- Button -->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for=""></label>
+								<div class="col-md-4">
+									<button type="submit" class="btn btn-primary">Mettre à jour</button>
+								</div>
+							</div>
+
+							</fieldset>
+						</form>
+
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
                     </div>
                 </div>
             </div>
@@ -104,6 +159,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
+	<script src="competence.js"></script>
 
 </body>
 

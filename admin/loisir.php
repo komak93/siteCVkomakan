@@ -2,35 +2,34 @@
 <?php
 	//gestion de contenu
 	//insertion d'une compétence
-	if(isset($_POST['competence'])){ // si on récupère une nouvelle compétence
-		if(!empty($_POST['competence'])){ // si compétence est different de vide
-			$competence = addslashes($_POST['competence']);
+	if(isset($_POST['loisir'])){ // si on récupère une nouvelle compétence
+		if(!empty($_POST['loisir'])){ // si compétence est different de vide
+			$loisir = addslashes($_POST['loisir']);
 			
-			$pdoCV->exec(" INSERT INTO t_competences VALUES (NULL, '$competence', '1') "); // mettre $id_utilisateur quand ont l'aura en variable de session
-			header("location: ../admin/competence.php ");
+			$pdoCV->exec(" INSERT INTO t_loisirs VALUES (NULL, '$loisir', '1') "); // mettre $id_utilisateur quand ont l'aura en variable de session
+			header("location: ../admin/loisir.php ");
 			exit();
 		}// ferme le if
 	}// ferme le if isset
 	
 // Suppression de compétence
-	if(isset($_GET['id_competence'])){
-		$delete = $_GET['id_competence'];
-		$sql = "DELETE FROM t_competences WHERE id_competence = '$delete' ";
+	if(isset($_GET['id_loisir'])){
+		$delete = $_GET['id_loisir'];
+		$sql = "DELETE FROM t_loisirs WHERE id_loisir = '$delete' ";
 		$pdoCV->query($sql); // ou on peut avec exec
-		header("location: ../admin/competence.php ");
+		header("location: ../admin/loisir.php ");
 	}
-	
-	
+
 	
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 	<?php
-		$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '1' ");
-		$ligne = $sql->fetch(); // va chercher !
-	?>
+			$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '1' ");
+			$ligne = $sql->fetch(); // va chercher !
+		?>
 	
    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,23 +89,23 @@
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
+		
+		<!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
 					<?php
-						$sql = $pdoCV->prepare(" SELECT * FROM t_competences WHERE utilisateur_id = '1' ");
+						$sql = $pdoCV->prepare(" SELECT * FROM t_loisirs WHERE utilisateur_id = '1' ");
 						$sql->execute();
-						$nb_competences = $sql->rowCount();
+						$nb_loisirs = $sql->rowCount();
 					?>
                     <div class="col-lg-12">
-						<h2>Compétences</h2>
-						<p>il y a <?= $nb_competences ; ?> compétences dans la table pour <?= $ligne['pseudo']; ?></p>
+						<h2>LOISIRS</h2>
+						<p>il y a <?= $nb_loisirs ; ?> Loisirs dans la table pour <?= $ligne['pseudo']; ?></p>
                         <table class="table table-striped">
 							<thead> 
 								<tr class="info">
-									<th scope="col">Compétences</th>
+									<th scope="col">Loisirs</th>
 									<th scope="col">Modifier</th>
 									<th scope="col">Supprimer</th>
 								</tr>
@@ -115,15 +114,15 @@
 								<?php while($ligne = $sql->fetch()){ ?>
 								<tr>
 									<td>
-										<?= $ligne['competence']; ?>
+										<?= $ligne['loisir']; ?>
 									</td>
-									<td><a href="modif_competence.php?id_competence=<?= $ligne['id_competence']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="competence.php?id_competence=<?= $ligne['id_competence']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td><a href="loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
 						</table>
-						<form class="form-horizontal" method="post" >
+						<form class="form-horizontal" method="post" action="">
 							<fieldset>
 
 							<!-- Form Name -->
@@ -131,9 +130,9 @@
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="competence" class="col-md-4 control-label" >Compétence</label>  
+								<label for="loisir" class="col-md-4 control-label" >Loisirs</label>  
 								<div class="col-md-4">
-									<input id="competence" name="competence" type="text" placeholder="Ajoutez une compétence..." class="form-control input-md" required="">
+									<input id="loisir" name="loisir" type="text" placeholder="Ajoutez un loisir..." class="form-control input-md" required="">
 								</div>
 							</div>
 
@@ -151,14 +150,9 @@
 						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
                     </div>
                 </div>
-            </div>
         </div>
-        <!-- /#page-content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
-    <!-- jQuery -->
+	</div>	
+	<!-- jQuery -->
     <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -171,7 +165,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="js/competence.js"></script>
+	<script src="competence.js"></script>
 
 </body>
 

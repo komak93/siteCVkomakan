@@ -2,22 +2,23 @@
 <?php
 	//gestion de contenu
 	//insertion d'une compétence
-	if(isset($_POST['competence'])){ // si on récupère une nouvelle compétence
-		if(!empty($_POST['competence'])){ // si compétence est different de vide
-			$competence = addslashes($_POST['competence']);
+	if(isset($_POST['titre_e'])){
+		if(!empty($_POST[''] && $_POST['']))
+		
+	}
 			
-			$pdoCV->exec(" INSERT INTO t_competences VALUES (NULL, '$competence', '1') "); // mettre $id_utilisateur quand ont l'aura en variable de session
-			header("location: ../admin/competence.php ");
+			$pdoCV->exec(" INSERT INTO t_experiences VALUES (NULL, '$experience', '') "); // mettre $id_utilisateur quand ont l'aura en variable de session
+			header("location: ../admin/experience.php ");
 			exit();
 		}// ferme le if
 	}// ferme le if isset
 	
 // Suppression de compétence
-	if(isset($_GET['id_competence'])){
-		$delete = $_GET['id_competence'];
-		$sql = "DELETE FROM t_competences WHERE id_competence = '$delete' ";
+	if(isset($_GET['id_experience'])){
+		$delete = $_GET['id_experience'];
+		$sql = "DELETE FROM t_experiences WHERE id_experience = '$delete' ";
 		$pdoCV->query($sql); // ou on peut avec exec
-		header("location: ../admin/competence.php ");
+		header("location: ../admin/experience.php ");
 	}
 	
 	
@@ -96,13 +97,13 @@
             <div class="container-fluid">
                 <div class="row">
 					<?php
-						$sql = $pdoCV->prepare(" SELECT * FROM t_competences WHERE utilisateur_id = '1' ");
+						$sql = $pdoCV->prepare(" SELECT * FROM t_experiences WHERE utilisateur_id = '1' ");
 						$sql->execute();
-						$nb_competences = $sql->rowCount();
+						$nb_experience = $sql->rowCount();
 					?>
                     <div class="col-lg-12">
-						<h2>Compétences</h2>
-						<p>il y a <?= $nb_competences ; ?> compétences dans la table pour <?= $ligne['pseudo']; ?></p>
+						<h2>Expériences</h2>
+						<p>il y a <?= $nb_experience ; ?> expériences dans la table pour <?= $ligne['pseudo']; ?></p>
                         <table class="table table-striped">
 							<thead> 
 								<tr class="info">
@@ -115,10 +116,10 @@
 								<?php while($ligne = $sql->fetch()){ ?>
 								<tr>
 									<td>
-										<?= $ligne['competence']; ?>
+										<?= $ligne['experience']; ?>
 									</td>
-									<td><a href="modif_competence.php?id_competence=<?= $ligne['id_competence']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="competence.php?id_competence=<?= $ligne['id_competence']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td><a href="modif_experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td><a href="experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
@@ -131,9 +132,31 @@
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="competence" class="col-md-4 control-label" >Compétence</label>  
+								<label for="experience" class="col-md-4 control-label" >Expérience</label>  
 								<div class="col-md-4">
-									<input id="competence" name="competence" type="text" placeholder="Ajoutez une compétence..." class="form-control input-md" required="">
+									<input id="experience" name="experience" type="text" placeholder="Ajoutez une compétence..." class="form-control input-md" required="">
+								</div>
+							</div>
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="sous_titre_e">Sous Titre</label>  
+								<div class="col-md-4">
+									<input id="sous_titre_e" name="sous_titre_e" type="text" placeholder="Facultatif...." class="form-control input-md">
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="dates_e">Dates</label>  
+								<div class="col-md-4">
+									<input id="dates_e" name="dates_e" type="text" placeholder="ex: 2012 - 2017" class="form-control input-md" required="">	
+								</div>
+							</div>
+							<!-- Textarea -->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="description_e">Description</label>
+								<div class="col-md-4">                     
+									<textarea class="form-control" id="description_e" name="description_e">....</textarea>
 								</div>
 							</div>
 
@@ -171,7 +194,6 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="js/competence.js"></script>
 
 </body>
 
