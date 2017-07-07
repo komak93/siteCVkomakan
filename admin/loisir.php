@@ -116,7 +116,7 @@
 									<td>
 										<?= $ligne['loisir']; ?>
 									</td>
-									<td><a href="modif/modif_loisir.php"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td><a href="modif/modif_loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
 									<td><a href="loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>

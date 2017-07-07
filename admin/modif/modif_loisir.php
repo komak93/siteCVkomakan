@@ -1,9 +1,10 @@
 <?php require '../../connexion/connexion.php'; ?>
 <?php
 
-// Gestion des contenus, mise à jour d'une compétence
+// Gestion des contenus, mise à jour d'un loisir
 	if(isset($_POST['loisir'])){
 		$loisir = addslashes($_POST['loisir']);
+		
 		$id_loisir = $_POST['id_loisir'];
 		$pdoCV->exec(" UPDATE t_loisirs SET loisir='$loisir' WHERE id_loisir='$id_loisir' ");
 		header('location: ../loisir.php');
@@ -89,11 +90,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-						<h2>Modification d'une compétence</h2>
+						<h2>Modification d'un loisir</h2>
                         <table class="table table-striped">
 							<thead> 
 								<tr class="info">
-									<th scope="col">Compétences</th>
+									<th scope="col">Loisir</th>
 									<th scope="col">Modifier</th>
 									<th scope="col">Supprimer</th>
 								</tr>
@@ -104,8 +105,8 @@
 									<td>
 										<?= $ligne['loisir']; ?>
 									</td>
-									<td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td><a href="modif_loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td><a href="modif_loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
