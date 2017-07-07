@@ -56,7 +56,7 @@
 
 </head>
 
-<body>
+<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
 
      <div id="wrapper">
 
@@ -64,7 +64,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="test.php">
+                    <a href="index.php">
                         HOME  :: <span class="glyphicon glyphicon-home"></span>
                     </a>
                 </li>
@@ -116,7 +116,7 @@
 									<td>
 										<?= $ligne['loisir']; ?>
 									</td>
-									<td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td><a href="modif/modif_loisir.php"><span class="glyphicon glyphicon-pencil"></span></a></td>
 									<td><a href="loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>

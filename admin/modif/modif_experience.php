@@ -1,19 +1,26 @@
-<?php require '../connexion/connexion.php'; ?>
+<?php require '../../connexion/connexion.php'; ?>
 <?php
 
 // Gestion des contenus, mise à jour d'une compétence
-	if(isset($_POST['competence'])){
-		$competence = addslashes($_POST['competence']);
-		$id_competence = $_POST['id_competence'];
-		$pdoCV->exec(" UPDATE t_competences SET competence='$competence' WHERE id_competence='$id_competence' ");
-		header('location: ../admin/competence.php');
+	if(isset($_POST['titre_e'])){
+		$titre = addslashes($_POST['titre_e']);
+		$sous_titre = addslashes($_POST['sous_titre_e']);
+		$description = addslashes($_POST['description_e']);
+		$dates = addslashes($_POST['dates_e']);
+		
+		$id_experience = $_POST['id_experience'];
+		$pdoCV->exec(" UPDATE t_experiences SET titre_e='$titre' WHERE id_experience='$id_experience' ");
+		$pdoCV->exec(" UPDATE t_experiences SET sous_titre_e='$sous_titre' WHERE id_experience='$id_experience' ");
+		$pdoCV->exec(" UPDATE t_experiences SET description_e='$description' WHERE id_experience='$id_experience' ");
+		$pdoCV->exec(" UPDATE t_experiences SET dates_e='$dates' WHERE id_experience='$id_experience' ");
+		header('location: ../experience.php');
 		exit();
 	}
 
 // Je recupere la competence
-	$id_competence = $_GET['id_competence']; // par l'id et $_GET
-	$sql = $pdoCV->query(" SELECT * FROM t_competences WHERE id_competence = '$id_competence' "); // la requête égale à l'id
-	$ligne_competence = $sql->fetch(); // 
+	$id_experience = $_GET['id_experience']; // par l'id et $_GET
+	$sql = $pdoCV->query(" SELECT * FROM t_experiences WHERE id_experience = '$id_experience' "); // la requête égale à l'id
+	$ligne_experience = $sql->fetch(); // 
 	
 ?>
 <!DOCTYPE html>
@@ -34,12 +41,12 @@
     <title><?= $ligne['prenom'].' '.$ligne['nom']; ?></title>
 
      <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="../css/simple-sidebar.css" rel="stylesheet">
 	
-	<link rel="stylesheet" href="css/competence.css" />
+	<link rel="stylesheet" href="../css/competence.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,7 +57,7 @@
 
 </head>
 
-<body>
+<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
 
      <div id="wrapper">
 
@@ -58,7 +65,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="test.php">
+                    <a href="index.php">
                         HOME  :: <span class="glyphicon glyphicon-home"></span>
                     </a>
                 </li>
@@ -102,15 +109,24 @@
 								<?php while($ligne = $sql->fetch()){ ?>
 								<tr>
 									<td>
-										<?= $ligne['competence']; ?>
+										<?= $ligne['titre_e'];?>
 									</td>
-									<td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="competence.php?id_competence=<?= $ligne['id_competence']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td>
+										<?= $ligne['sous_titre_e'];?>
+									</td>	
+									<td>	
+										<?= $ligne['description_e'];?>
+									</td>	
+									<td>	
+										<?= $ligne['dates_e'];?>
+									</td>
+									<td><a href="modif_experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td><a href="experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
 						</table>
-						<form class="form-horizontal" method="post" action="modif_competence.php">
+						<form class="form-horizontal" method="post" action="modif_experience.php">
 							<fieldset>
 
 							<!-- Form Name -->
@@ -118,10 +134,34 @@
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="competence" class="col-md-4 control-label" >Compétence</label>  
+								<label for="titre_e" class="col-md-4 control-label" >Titre de l'expérience</label>  
 								<div class="col-md-4">
-									<input name="competence" type="text" class="form-control input-md" value="<?= $ligne_competence['competence']; ?>">
-									<input name="id_competence" hidden value="<?= $ligne_competence['id_competence']; ?>">
+									<input name="titre_e" type="text" class="form-control input-md" value="<?= $ligne_experience['titre_e']; ?>">
+									<input name="id_experience" hidden value="<?= $ligne_experience['id_experience']; ?>">
+								</div>
+							</div>
+							<!-- Text input-->
+							<div class="form-group">
+								<label for="sous_titre_e" class="col-md-4 control-label" >Sous-titre</label>  
+								<div class="col-md-4">
+									<input name="sous_titre_e" type="text" class="form-control input-md" value="<?= $ligne_experience['sous_titre_e']; ?>">
+									<input name="id_experience" hidden value="<?= $ligne_experience['id_experience']; ?>">
+								</div>
+							</div>
+							<!-- Text input-->
+							<div class="form-group">
+								<label for="dates_e" class="col-md-4 control-label" >Titre de l'expérience</label>  
+								<div class="col-md-4">
+									<input name="dates_e" type="text" class="form-control input-md" value="<?= $ligne_experience['dates_e']; ?>">
+									<input name="id_experience" hidden value="<?= $ligne_experience['id_experience']; ?>">
+								</div>
+							</div>
+							<!-- Textarea -->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="description_e">Description</label>
+								<div class="col-md-4">                     
+									<textarea name="description_e" cols="80" rows="4" class="form-control"><?= $ligne_experience['description_e']; ?> </textarea>
+									<textarea name="id_experience" hidden ><?= $ligne_experience['id_experience']; ?></textarea>
 								</div>
 							</div>
 
@@ -147,10 +187,10 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="../js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>
@@ -159,7 +199,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="competence.js"></script>
+	<script src="../competence.js"></script>
 
 </body>
 

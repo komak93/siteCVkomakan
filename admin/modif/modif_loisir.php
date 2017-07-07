@@ -2,18 +2,18 @@
 <?php
 
 // Gestion des contenus, mise à jour d'une compétence
-	if(isset($_POST['competence'])){
-		$competence = addslashes($_POST['competence']);
-		$id_competence = $_POST['id_competence'];
-		$pdoCV->exec(" UPDATE t_competences SET competence='$competence' WHERE id_competence='$id_competence' ");
-		header('location: ../competence.php');
+	if(isset($_POST['loisir'])){
+		$loisir = addslashes($_POST['loisir']);
+		$id_loisir = $_POST['id_loisir'];
+		$pdoCV->exec(" UPDATE t_loisirs SET loisir='$loisir' WHERE id_loisir='$id_loisir' ");
+		header('location: ../loisir.php');
 		exit();
 	}
 
-// Je recupere la competence
-	$id_competence = $_GET['id_competence']; // par l'id et $_GET
-	$sql = $pdoCV->query(" SELECT * FROM t_competences WHERE id_competence = '$id_competence' "); // la requête égale à l'id
-	$competence = $sql->fetch(); // 
+// Je recupere les loisirs
+	$id_loisir = $_GET['id_loisir']; // par l'id et $_GET
+	$sql = $pdoCV->query(" SELECT * FROM t_loisirs WHERE id_loisir = '$id_loisir' "); // la requête égale à l'id
+	$loisir = $sql->fetch(); // 
 	
 ?>
 <!DOCTYPE html>
@@ -102,26 +102,26 @@
 								<?php while($ligne = $sql->fetch()){ ?>
 								<tr>
 									<td>
-										<?= $ligne['competence']; ?>
+										<?= $ligne['loisir']; ?>
 									</td>
 									<td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="competence.php?id_competence=<?= $ligne['id_competence']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td><a href="loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
 						</table>
-						<form class="form-horizontal" method="post" action="modif_competence.php">
+						<form class="form-horizontal" method="post" action="modif_loisir.php">
 							<fieldset>
 
 							<!-- Form Name -->
-							<legend>Form Name</legend>
+							<legend></legend>
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="competence" class="col-md-4 control-label" >Compétence</label>  
+								<label for="loisir" class="col-md-4 control-label" >Loisir</label>  
 								<div class="col-md-4">
-									<input name="competence" type="text" class="form-control input-md" value="<?= $competence['competence']; ?>">
-									<input name="id_competence" hidden value="<?= $competence['id_competence']; ?>">
+									<input name="loisir" type="text" class="form-control input-md" value="<?= $loisir['loisir']; ?>">
+									<input name="id_loisir" hidden value="<?= $loisir['id_loisir']; ?>">
 								</div>
 							</div>
 
@@ -136,7 +136,7 @@
 							</fieldset>
 						</form>
 
-						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Menu !</a>
                     </div>
                 </div>
             </div>

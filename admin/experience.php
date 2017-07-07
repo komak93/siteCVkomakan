@@ -2,16 +2,18 @@
 <?php
 	//gestion de contenu
 	//insertion d'une compétence
-	if(isset($_POST['titre_e'])){
-		if(!empty($_POST[''] && $_POST['']))
-		
-	}
-			
-			$pdoCV->exec(" INSERT INTO t_experiences VALUES (NULL, '$experience', '') "); // mettre $id_utilisateur quand ont l'aura en variable de session
-			header("location: ../admin/experience.php ");
-			exit();
-		}// ferme le if
-	}// ferme le if isset
+	if(isset($_POST['titre_e'])){//si on récupère une nelle expérience
+			if($_POST['titre_e']!='' && $_POST['description_e']!='' && $_POST['dates_e']!=''){// si expérience et les autres champs ne sont pas vide
+				$titre_e = addslashes($_POST['titre_e']);
+				$sous_titre_e = addslashes($_POST['sous_titre_e']);
+            	$description_e = addslashes($_POST['description_e']);
+            	$dates_e = addslashes($_POST['dates_e']);
+				
+				$pdoCV->exec(" INSERT INTO t_experiences VALUES (NULL, '$titre_e', '$sous_titre_e', '$description_e', '$dates_e', '1') ");//mettre $id_utilisateur quand on l'aura en variable de session
+				header("location: ../admin/experience.php");
+				exit();
+			}//ferme le if
+		}//ferme le if isset
 	
 // Suppression de compétence
 	if(isset($_GET['id_experience'])){
@@ -58,7 +60,7 @@
 
 </head>
 
-<body>
+<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
 
      <div id="wrapper">
 
@@ -66,7 +68,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="test.php">
+                    <a href="index.php">
                         HOME  :: <span class="glyphicon glyphicon-home"></span>
                     </a>
                 </li>
@@ -107,7 +109,10 @@
                         <table class="table table-striped">
 							<thead> 
 								<tr class="info">
-									<th scope="col">Compétences</th>
+									<th scope="col">Titres</th>
+									<th scope="col">Sous-titres</th>
+									<th scope="col">Description</th>
+									<th scope="col">Dates</th>
 									<th scope="col">Modifier</th>
 									<th scope="col">Supprimer</th>
 								</tr>
@@ -116,15 +121,24 @@
 								<?php while($ligne = $sql->fetch()){ ?>
 								<tr>
 									<td>
-										<?= $ligne['experience']; ?>
+										<?= $ligne['titre_e'];?>
 									</td>
-									<td><a href="modif_experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td>
+										<?= $ligne['sous_titre_e'];?>
+									</td>	
+									<td>	
+										<?= $ligne['description_e'];?>
+									</td>	
+									<td>	
+										<?= $ligne['dates_e'];?>
+									</td>
+									<td><a href="modif/modif_experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
 									<td><a href="experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
 						</table>
-						<form class="form-horizontal" method="post" >
+						<form class="form-horizontal" method="post" action="experience.php">
 							<fieldset>
 
 							<!-- Form Name -->
@@ -132,9 +146,9 @@
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="experience" class="col-md-4 control-label" >Expérience</label>  
+								<label for="titre_e" class="col-md-4 control-label" >Titre de l'expérience</label>  
 								<div class="col-md-4">
-									<input id="experience" name="experience" type="text" placeholder="Ajoutez une compétence..." class="form-control input-md" required="">
+									<input id="titre_e" name="titre_e" type="text" placeholder="Ajoutez une expérience..." class="form-control input-md" required="">
 								</div>
 							</div>
 							<!-- Text input-->
@@ -144,7 +158,7 @@
 									<input id="sous_titre_e" name="sous_titre_e" type="text" placeholder="Facultatif...." class="form-control input-md">
 								</div>
 							</div>
-
+							
 							<!-- Text input-->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="dates_e">Dates</label>  
@@ -152,14 +166,15 @@
 									<input id="dates_e" name="dates_e" type="text" placeholder="ex: 2012 - 2017" class="form-control input-md" required="">	
 								</div>
 							</div>
+
 							<!-- Textarea -->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="description_e">Description</label>
 								<div class="col-md-4">                     
-									<textarea class="form-control" id="description_e" name="description_e">....</textarea>
+									<textarea name="description_e" cols="80" rows="4" class="form-control" id="description_e" placeholder="description de l'expérience"></textarea>
 								</div>
 							</div>
-
+							
 							<!-- Button -->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for=""></label>

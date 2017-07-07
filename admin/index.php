@@ -33,7 +33,7 @@
 
 </head>
 
-<body>
+<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
 
     <div id="wrapper">
 
@@ -72,15 +72,15 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Site CV de <?= $ligne['prenom'].' '.$ligne['nom']; ?></h1>
+                        <h1 style="text-align: center">ADMIN :: <?= $ligne['prenom'].' '.$ligne['nom']; ?> Site CV</h1>
 							
-							<?php 
+							<code><?php 
 								$datetime = date("d-m-Y H:i:s");
 								echo $datetime; 
-							?>
+							?></code>
 						
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                        <br />
+                        <br />
                         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
                     </div>
                 </div>
