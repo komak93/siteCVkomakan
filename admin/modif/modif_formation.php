@@ -2,27 +2,31 @@
 <?php
 
 // Gestion des contenus, mise à jour d'une compétence
-	if(isset($_POST['titre_e'])){
-		$titre = addslashes($_POST['titre_e']);
-		$sous_titre = addslashes($_POST['sous_titre_e']);
-		$description = addslashes($_POST['description_e']);
-		$dates = addslashes($_POST['dates_e']);
+	if(isset($_POST['titre_f'])){
+		$titre = addslashes($_POST['titre_f']);
+		$sous_titre = addslashes($_POST['sous_titre_f']);
+		$description = addslashes($_POST['description_f']);
+		$dates = addslashes($_POST['dates_f']);
 		
-		$id_experience = $_POST['id_experience'];
+		$id_formation = $_POST['id_formation'];
 
 // j'execute les requêtes
-		$pdoCV->exec(" UPDATE t_experiences SET titre_e='$titre' WHERE id_experience='$id_experience' ");
-		$pdoCV->exec(" UPDATE t_experiences SET sous_titre_e='$sous_titre' WHERE id_experience='$id_experience' ");
-		$pdoCV->exec(" UPDATE t_experiences SET description_e='$description' WHERE id_experience='$id_experience' ");
-		$pdoCV->exec(" UPDATE t_experiences SET dates_e='$dates' WHERE id_experience='$id_experience' ");
-		header('location: ../experience.php');
+		$pdoCV->exec(" UPDATE t_formations SET titre_f='$titre' WHERE id_formation='$id_formation' ");
+		$pdoCV->exec(" UPDATE t_formations SET sous_titre_f='$sous_titre' WHERE id_formation='$id_formation' ");
+		$pdoCV->exec(" UPDATE t_formations SET description_f='$description' WHERE id_formation='$id_formation' ");
+		$pdoCV->exec(" UPDATE t_formations SET dates_f='$dates' WHERE id_formation='$id_formation' ");
+		header('location: ../formation.php');
 		exit();
 	}
 
 // Je recupere la competence
-	$id_experience = $_GET['id_experience']; // par l'id et $_GET
-	$sql = $pdoCV->query(" SELECT * FROM t_experiences WHERE id_experience = '$id_experience' "); // la requête égale à l'id
-	$ligne_experience = $sql->fetch(); // 
+	$id_formation = $_GET['id_formation']; // par l'id et $_GET
+	$sql = $pdoCV->query(" SELECT * FROM t_formations WHERE id_formation = '$id_formation' "); // la requête égale à l'id
+	$ligne_formation = $sql->fetch(); // 
+	
+	
+	
+	session_start();
 	
 ?>
 <!DOCTYPE html>
@@ -102,7 +106,7 @@
                         <table class="table table-striped">
 							<thead> 
 								<tr class="info">
-									<th scope="col">Compétences</th>
+									<th scope="col">Formations</th>
 									<th scope="col">Modifier</th>
 									<th scope="col">Supprimer</th>
 								</tr>
@@ -111,24 +115,24 @@
 								<?php while($ligne = $sql->fetch()){ ?>
 								<tr>
 									<td>
-										<?= $ligne['titre_e'];?>
+										<?= $ligne['titre_f'];?>
 									</td>
 									<td>
-										<?= $ligne['sous_titre_e'];?>
+										<?= $ligne['sous_titre_f'];?>
 									</td>	
 									<td>	
-										<?= $ligne['description_e'];?>
+										<?= $ligne['description_f'];?>
 									</td>	
 									<td>	
-										<?= $ligne['dates_e'];?>
+										<?= $ligne['dates_f'];?>
 									</td>
-									<td><a href="modif_experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td><a href="modif_formation.php?id_formation=<?= $ligne['id_formation']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+									<td><a href="formation.php?id_formation=<?= $ligne['id_formation']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
 						</table>
-						<form class="form-horizontal" method="post" action="modif_experience.php">
+						<form class="form-horizontal" method="post" action="modif_formation.php">
 							<fieldset>
 
 							<!-- Form Name -->
@@ -136,31 +140,31 @@
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="titre_e" class="col-md-4 control-label" >Titre de l'expérience</label>  
+								<label for="titre_f" class="col-md-4 control-label" >Titre de l'expérience</label>  
 								<div class="col-md-4">
-									<input name="titre_e" type="text" class="form-control input-md" value="<?= $ligne_experience['titre_e']; ?>">
-									<input name="id_experience" hidden value="<?= $ligne_experience['id_experience']; ?>">
+									<input name="titre_f" type="text" class="form-control input-md" value="<?= $ligne_formation['titre_f']; ?>">
+									<input name="id_formation" hidden value="<?= $ligne_formation['id_formation']; ?>">
 								</div>
 							</div>
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="sous_titre_e" class="col-md-4 control-label" >Sous-titre</label>  
+								<label for="sous_titre_f" class="col-md-4 control-label" >Sous-titre</label>  
 								<div class="col-md-4">
-									<input name="sous_titre_e" type="text" class="form-control input-md" value="<?= $ligne_experience['sous_titre_e']; ?>">
+									<input name="sous_titre_f" type="text" class="form-control input-md" value="<?= $ligne_formation['sous_titre_f']; ?>">
 								</div>
 							</div>
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="dates_e" class="col-md-4 control-label" >Titre de l'expérience</label>  
+								<label for="dates_f" class="col-md-4 control-label" >Titre de l'expérience</label>  
 								<div class="col-md-4">
-									<input name="dates_e" type="text" class="form-control input-md" value="<?= $ligne_experience['dates_e']; ?>">
+									<input name="dates_f" type="text" class="form-control input-md" value="<?= $ligne_formation['dates_f']; ?>">
 								</div>
 							</div>
 							<!-- Textarea -->
 							<div class="form-group">
-								<label class="col-md-4 control-label" for="description_e">Description</label>
+								<label class="col-md-4 control-label" for="description_f">Description</label>
 								<div class="col-md-4">                     
-									<textarea name="description_e" cols="80" rows="4" class="form-control"><?= $ligne_experience['description_e']; ?> </textarea>
+									<textarea name="description_f" cols="80" rows="4" class="form-control"><?= $ligne_formation['description_f']; ?> </textarea>
 								</div>
 							</div>
 
@@ -198,7 +202,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="../competence.js"></script>
+	<script src="../formation.js"></script>
 
 </body>
 

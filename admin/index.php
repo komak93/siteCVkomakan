@@ -1,6 +1,36 @@
 <?php 
 	require '../connexion/connexion.php';
 ?>
+<?php
+	
+	session_start();
+	
+		if(isset($_SESSION['connexion']) && 
+		$_SESSION['connexion']=='connecté'){
+			$id_utilisateur=$_SESSION['id_utilisateur'];
+			$prenom=$_SESSION['prenom'];
+			$nom=$_SESSION['nom'];
+			
+			echo $_SESSION['connexion'];
+			
+		}else{
+			header('location: login.php');
+			
+		}
+		
+		if(isset($_GET['quitter'])){
+			$_SESSION['connexion']='';
+			$_SESSION['id_utilisateur']='';
+			$_SESSION['prenom']='';
+			$_SESSION['nom']='';
+			
+			unset($_SESSION['connexion']);
+			session_destroy();
+			
+			header('location:../login.php');
+		}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,6 +92,10 @@
                 </li>
                 <li>
                     <a href="utilisateur.php">Utilisateurs</a>
+                </li>
+				<li role="separator" class="divider"></li>
+				<li>
+                    <a href="index.php?quitter=oui">Déconnexion</a>
                 </li>
             </ul>
         </div>
