@@ -59,7 +59,7 @@
 
 </head>
 
-<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
+<body>
 
      <div id="wrapper">
 
@@ -67,7 +67,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="index.php">
+                    <a href="../index.php">
                         HOME  :: <span class="glyphicon glyphicon-home"></span>
                     </a>
                 </li>
@@ -175,7 +175,7 @@
 							</fieldset>
 						</form>
 
-						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Affichage du Menu</a>
                     </div>
                 </div>
             </div>
@@ -198,7 +198,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="../competence.js"></script>
+	<script src="../js/mon_js.js" ></script>
 
 </body>
 

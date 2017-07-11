@@ -60,7 +60,7 @@
 	
 	</head>
 	
-	<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
+	<body>
 	
 		<form class="form-horizontal" method="post" action="login.php">
 			<fieldset>

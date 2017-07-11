@@ -24,6 +24,34 @@
 		header("location: ../admin/experience.php ");
 	}
 	
+	session_start();
+	
+		if(isset($_SESSION['connexion']) && 
+		$_SESSION['connexion']=='connecté'){
+			$id_utilisateur=$_SESSION['id_utilisateur'];
+			$prenom=$_SESSION['prenom'];
+			$nom=$_SESSION['nom'];
+			
+			echo $_SESSION['connexion'];
+			
+		}else{
+			header('location: login.php');
+			
+		}
+		
+		if(isset($_GET['quitter'])){
+			$_SESSION['connexion']='';
+			$_SESSION['id_utilisateur']='';
+			$_SESSION['prenom']='';
+			$_SESSION['nom']='';
+			
+			unset($_SESSION['connexion']);
+			session_destroy();
+			
+			header('location: login.php');
+		}
+		
+		$utilisateur = $_SESSION['id_utilisateur'];
 	
 	
 ?>
@@ -32,7 +60,7 @@
 
 <head>
 	<?php
-		$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '1' ");
+		$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '$utilisateur' ");
 		$ligne = $sql->fetch(); // va chercher !
 	?>
 	
@@ -61,46 +89,21 @@
 
 </head>
 
-<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
-
-     <div id="wrapper">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="index.php">
-                        HOME  :: <span class="glyphicon glyphicon-home"></span>
-                    </a>
-                </li>
-                <li>
-					<a href="competence.php">Compétences</a>
-                </li>
-                <li>
-                    <a href="experience.php">Experiences</a>
-                </li>
-                <li>
-                    <a href="formation.php">Formations</a>
-                </li>
-                <li>
-                    <a href="loisir.php">Loisirs</a>
-                </li>
-                <li>
-                    <a href="realisations.php">Réalisation</a>
-                </li>
-                <li>
-                    <a href="utilisateur.php">Utilisateurs</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+<body>
+<!-------------------------------------------------------------------------------------------------
+									NAV (SIDEBAR) DEBUT
+-------------------------------------------------------------------------------------------------->
+				<?php  include_once('sidebar.inc.php');     ?>
+<!-------------------------------------------------------------------------------------------------
+									NAV (SIDEBAR) FIN
+-------------------------------------------------------------------------------------------------->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
 					<?php
-						$sql = $pdoCV->prepare(" SELECT * FROM t_experiences WHERE utilisateur_id = '1' ");
+						$sql = $pdoCV->prepare(" SELECT * FROM t_experiences WHERE utilisateur_id = '$utilisateur' ");
 						$sql->execute();
 						$nb_experience = $sql->rowCount();
 					?>
@@ -134,7 +137,7 @@
 										<?= $ligne['dates_e'];?>
 									</td>
 									<td><a href="modif/modif_experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td><a class="suppr" href="experience.php?id_experience=<?= $ligne['id_experience']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
@@ -187,7 +190,7 @@
 							</fieldset>
 						</form>
 
-						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Affichage du Menu</a>
                     </div>
                 </div>
             </div>
@@ -195,6 +198,14 @@
         <!-- /#page-content-wrapper -->
 
     </div>
+<!-------------------------------------------------------------------------------------------------
+								FOOTER DEBUT
+-------------------------------------------------------------------------------------------------->
+							<?php  include_once('footer.php');     ?>
+<!-------------------------------------------------------------------------------------------------
+								FOOTER FIN
+-------------------------------------------------------------------------------------------------->
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -209,6 +220,11 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+    </script>
+	<script src="js/mon_js.js" ></script>
+	<script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
+	<script>
+            CKEDITOR.replace( 'description_e' );
     </script>
 
 </body>

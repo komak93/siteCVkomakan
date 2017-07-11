@@ -1,5 +1,6 @@
 <?php require '../connexion/connexion.php'; ?>
 <?php
+
 	//gestion de contenu
 	//insertion d'une compétence
 	if(isset($_POST['titre_f'])){//si on récupère une nelle expérience
@@ -25,16 +26,16 @@
 	}
 	
 	session_start();
-	
+	$utilisateur = $_SESSION['id_utilisateur'];
 	
 	
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 	<?php
-		$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '1' ");
+		$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '$utilisateur' ");
 		$ligne = $sql->fetch(); // va chercher !
 	?>
 	
@@ -63,52 +64,27 @@
 
 </head>
 
-<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
-
-     <div id="wrapper">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="index.php">
-                        HOME  :: <span class="glyphicon glyphicon-home"></span>
-                    </a>
-                </li>
-                <li>
-					<a href="competence.php">Compétences</a>
-                </li>
-                <li>
-                    <a href="experience.php">Experiences</a>
-                </li>
-                <li>
-                    <a href="formation.php">Formations</a>
-                </li>
-                <li>
-                    <a href="loisir.php">Loisirs</a>
-                </li>
-                <li>
-                    <a href="realisations.php">Réalisation</a>
-                </li>
-                <li>
-                    <a href="utilisateur.php">Utilisateurs</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+<body>
+<!-------------------------------------------------------------------------------------------------
+									NAV (SIDEBAR) DEBUT
+-------------------------------------------------------------------------------------------------->
+				<?php  include_once('sidebar.inc.php');     ?>
+<!-------------------------------------------------------------------------------------------------
+									NAV (SIDEBAR) FIN
+-------------------------------------------------------------------------------------------------->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
 					<?php
-						$sql = $pdoCV->prepare(" SELECT * FROM t_experiences WHERE utilisateur_id = '1' ");
+						$sql = $pdoCV->prepare(" SELECT * FROM t_formations WHERE utilisateur_id = '$utilisateur' ");
 						$sql->execute();
-						$nb_experience = $sql->rowCount();
+						$nb_formation = $sql->rowCount();
 					?>
                     <div class="col-lg-12">
 						<h2>Formations</h2>
-						<p>il y a <?= $nb_experience ; ?> formations dans la table pour <?= $ligne['pseudo']; ?></p>
+						<p>il y a <?= $nb_formation ; ?> formations dans la table pour <?= $ligne['pseudo']; ?></p>
                         <table class="table table-striped">
 							<thead> 
 								<tr class="info">
@@ -136,12 +112,12 @@
 										<?= $ligne['dates_f'];?>
 									</td>
 									<td><a href="modif/modif_formation.php?id_formation=<?= $ligne['id_formation']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="formation.php?id_formation=<?= $ligne['id_formation']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td><a class="suppr" href="formation.php?id_formation=<?= $ligne['id_formation']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
 						</table>
-						<form class="form-horizontal" method="post" action="experience.php">
+						<form class="form-horizontal" method="post" action="formation.php">
 							<fieldset>
 
 							<!-- Form Name -->
@@ -149,9 +125,9 @@
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label for="titre_f" class="col-md-4 control-label" >Titre de l'expérience</label>  
+								<label for="titre_f" class="col-md-4 control-label" >Titre de la formation</label>  
 								<div class="col-md-4">
-									<input id="titre_f" name="titre_f" type="text" placeholder="Ajoutez une expérience..." class="form-control input-md" required="">
+									<input id="titre_f" name="titre_f" type="text" placeholder="Ajoutez une formation..." class="form-control input-md" required="">
 								</div>
 							</div>
 							<!-- Text input-->
@@ -166,13 +142,13 @@
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="dates_f">Dates</label>  
 								<div class="col-md-4">
-									<input id="dates_e" name="dates_f" type="text" placeholder="ex: 2012 - 2017" class="form-control input-md" required="">	
+									<input id="dates_f" name="dates_f" type="text" placeholder="ex: 2012 - 2017" class="form-control input-md" required="">	
 								</div>
 							</div>
 
 							<!-- Textarea -->
 							<div class="form-group">
-								<label class="col-md-4 control-label" for="description_e">Description</label>
+								<label class="col-md-4 control-label" for="description_f">Description</label>
 								<div class="col-md-4">                     
 									<textarea name="description_f" cols="80" rows="4" class="form-control" id="description_f" placeholder="description de l'expérience"></textarea>
 								</div>
@@ -189,7 +165,7 @@
 							</fieldset>
 						</form>
 
-						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Affichage du Menu</a>
                     </div>
                 </div>
             </div>
@@ -197,6 +173,14 @@
         <!-- /#page-content-wrapper -->
 
     </div>
+<!-------------------------------------------------------------------------------------------------
+							FOOTER DEBUT
+-------------------------------------------------------------------------------------------------->
+						<?php  include_once('footer.php');     ?>
+<!-------------------------------------------------------------------------------------------------
+							FOOTER FIN
+-------------------------------------------------------------------------------------------------->
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -211,6 +195,11 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+    </script>
+	<script src="js/mon_js.js" ></script>
+	<script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
+	<script>
+            CKEDITOR.replace( 'description_f' );
     </script>
 
 </body>

@@ -50,7 +50,7 @@
 
 </head>
 
-<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
+<body>
 
      <div id="wrapper">
 
@@ -58,27 +58,27 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="index.php">
+                    <a href="../index.php">
                         HOME  :: <span class="glyphicon glyphicon-home"></span>
                     </a>
                 </li>
                 <li>
-					<a href="competence.php">Compétences</a>
+					<a href="../competence.php">Compétences</a>
                 </li>
                 <li>
-                    <a href="experience.php">Experiences</a>
+                    <a href="../experience.php">Experiences</a>
                 </li>
                 <li>
-                    <a href="formation.php">Formations</a>
+                    <a href="../formation.php">Formations</a>
                 </li>
                 <li>
-                    <a href="loisir.php">Loisirs</a>
+                    <a href="../loisir.php">Loisirs</a>
                 </li>
                 <li>
-                    <a href="realisations.php">Réalisation</a>
+                    <a href="../realisations.php">Réalisation</a>
                 </li>
                 <li>
-                    <a href="utilisateur.php">Utilisateurs</a>
+                    <a href="../utilisateur.php">Utilisateurs</a>
                 </li>
             </ul>
         </div>
@@ -136,7 +136,7 @@
 							</fieldset>
 						</form>
 
-						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Affichage du Menu</a>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="../competence.js"></script>
+	<script src="../js/mon_js.js" ></script>
 
 </body>
 

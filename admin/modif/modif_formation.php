@@ -24,8 +24,6 @@
 	$sql = $pdoCV->query(" SELECT * FROM t_formations WHERE id_formation = '$id_formation' "); // la requête égale à l'id
 	$ligne_formation = $sql->fetch(); // 
 	
-	
-	
 	session_start();
 	
 ?>
@@ -63,7 +61,7 @@
 
 </head>
 
-<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
+<body>
 
      <div id="wrapper">
 
@@ -71,7 +69,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="index.php">
+                    <a href="../index.php">
                         HOME  :: <span class="glyphicon glyphicon-home"></span>
                     </a>
                 </li>
@@ -97,7 +95,7 @@
         </div>
         <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
+<!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
@@ -179,7 +177,7 @@
 							</fieldset>
 						</form>
 
-						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Affichage du Menu</a>
                     </div>
                 </div>
             </div>
@@ -202,7 +200,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="../formation.js"></script>
+	<script src="../js/mon_js.js" ></script>
 
 </body>
 

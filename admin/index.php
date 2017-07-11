@@ -27,8 +27,10 @@
 			unset($_SESSION['connexion']);
 			session_destroy();
 			
-			header('location:../login.php');
+			header('location: login.php');
 		}
+		
+		$utilisateur = $_SESSION['id_utilisateur'];
 
 ?>
 <!DOCTYPE html>
@@ -36,7 +38,7 @@
 
 <head>
 	<?php
-			$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '1' ");
+			$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '$utilisateur' ");
 			$ligne = $sql->fetch(); // va chercher !
 		?>
 	
@@ -63,44 +65,14 @@
 
 </head>
 
-<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
-
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="test.php">
-                        HOME  :: <span class="glyphicon glyphicon-home"></span>
-                    </a>
-                </li>
-                <li>
-					<a href="competence.php">Compétences</a>
-                </li>
-                <li>
-                    <a href="experience.php">Experiences</a>
-                </li>
-                <li>
-                    <a href="formation.php">Formations</a>
-                </li>
-                <li>
-                    <a href="loisir.php">Loisirs</a>
-                </li>
-                <li>
-                    <a href="realisations.php">Réalisation</a>
-                </li>
-                <li>
-                    <a href="utilisateur.php">Utilisateurs</a>
-                </li>
-				<li role="separator" class="divider"></li>
-				<li>
-                    <a href="index.php?quitter=oui">Déconnexion</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
+<body>
+<!-------------------------------------------------------------------------------------------------
+									NAV (SIDEBAR) DEBUT
+-------------------------------------------------------------------------------------------------->
+				<?php  include_once('sidebar.inc.php');     ?>
+<!-------------------------------------------------------------------------------------------------
+									NAV (SIDEBAR) FIN
+-------------------------------------------------------------------------------------------------->
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -115,7 +87,7 @@
 						
                         <br />
                         <br />
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Affichage du Menu</a>
                     </div>
                 </div>
             </div>
@@ -123,6 +95,13 @@
         <!-- /#page-content-wrapper -->
 
     </div>
+<!-------------------------------------------------------------------------------------------------
+								FOOTER DEBUT
+-------------------------------------------------------------------------------------------------->
+							<?php  include_once('footer.php');     ?>
+<!-------------------------------------------------------------------------------------------------
+								FOOTER FIN
+-------------------------------------------------------------------------------------------------->
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -138,6 +117,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
+	<script src="js/mon_js.js" ></script>
 
 </body>
 

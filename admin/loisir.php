@@ -20,14 +20,15 @@
 		header("location: ../admin/loisir.php ");
 	}
 
-	
+	session_start();
+	$utilisateur = $_SESSION['id_utilisateur'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
 	<?php
-			$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '1' ");
+			$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '$utilisateur' ");
 			$ligne = $sql->fetch(); // va chercher !
 		?>
 	
@@ -56,46 +57,21 @@
 
 </head>
 
-<body style="background: url(image/bgimg.png)no-repeat; background-size:cover;">
-
-     <div id="wrapper">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="index.php">
-                        HOME  :: <span class="glyphicon glyphicon-home"></span>
-                    </a>
-                </li>
-                <li>
-					<a href="competence.php">Compétences</a>
-                </li>
-                <li>
-                    <a href="experience.php">Experiences</a>
-                </li>
-                <li>
-                    <a href="formation.php">Formations</a>
-                </li>
-                <li>
-                    <a href="loisir.php">Loisirs</a>
-                </li>
-                <li>
-                    <a href="realisations.php">Réalisation</a>
-                </li>
-                <li>
-                    <a href="utilisateur.php">Utilisateurs</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+<body>
+<!-------------------------------------------------------------------------------------------------
+									NAV (SIDEBAR) DEBUT
+-------------------------------------------------------------------------------------------------->
+				<?php  include_once('sidebar.inc.php');     ?>
+<!-------------------------------------------------------------------------------------------------
+									NAV (SIDEBAR) FIN
+-------------------------------------------------------------------------------------------------->
 		
 		<!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
 					<?php
-						$sql = $pdoCV->prepare(" SELECT * FROM t_loisirs WHERE utilisateur_id = '1' ");
+						$sql = $pdoCV->prepare(" SELECT * FROM t_loisirs WHERE utilisateur_id = '$utilisateur' ");
 						$sql->execute();
 						$nb_loisirs = $sql->rowCount();
 					?>
@@ -117,7 +93,7 @@
 										<?= $ligne['loisir']; ?>
 									</td>
 									<td><a href="modif/modif_loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+									<td><a class="suppr" href="loisir.php?id_loisir=<?= $ligne['id_loisir']; ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
@@ -147,11 +123,19 @@
 							</fieldset>
 						</form>
 
-						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Afficher le Menu</a>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Affichage du Menu</a>
                     </div>
                 </div>
         </div>
-	</div>	
+	</div>
+<!-------------------------------------------------------------------------------------------------
+								FOOTER DEBUT
+-------------------------------------------------------------------------------------------------->
+							<?php  include_once('footer.php');     ?>
+<!-------------------------------------------------------------------------------------------------
+								FOOTER FIN
+-------------------------------------------------------------------------------------------------->
+	
 	<!-- jQuery -->
     <script src="js/jquery.js"></script>
 
@@ -165,7 +149,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="competence.js"></script>
+	<script src="js/mon_js.js" ></script>
 
 </body>
 
