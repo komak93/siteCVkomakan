@@ -50,6 +50,9 @@
      <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
+	<!-- My CSS -->
+	<link rel="stylesheet" href="css/style.css">
+	
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
 	

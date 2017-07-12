@@ -25,33 +25,7 @@
 	}
 	
 	session_start();
-	
-		if(isset($_SESSION['connexion']) && 
-		$_SESSION['connexion']=='connecté'){
-			$id_utilisateur=$_SESSION['id_utilisateur'];
-			$prenom=$_SESSION['prenom'];
-			$nom=$_SESSION['nom'];
-			
-			echo $_SESSION['connexion'];
-			
-		}else{
-			header('location: login.php');
-			
-		}
-		
-		if(isset($_GET['quitter'])){
-			$_SESSION['connexion']='';
-			$_SESSION['id_utilisateur']='';
-			$_SESSION['prenom']='';
-			$_SESSION['nom']='';
-			
-			unset($_SESSION['connexion']);
-			session_destroy();
-			
-			header('location: login.php');
-		}
-		
-		$utilisateur = $_SESSION['id_utilisateur'];
+	$utilisateur = $_SESSION['id_utilisateur'];
 	
 	
 ?>
@@ -74,6 +48,9 @@
 
      <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- My CSS -->
+	<link rel="stylesheet" href="css/style.css">
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
@@ -109,7 +86,6 @@
 					?>
                     <div class="col-lg-12">
 						<h2>Expériences</h2>
-						<p>il y a <?= $nb_experience ; ?> expériences dans la table pour <?= $ligne['pseudo']; ?></p>
                         <table class="table table-striped">
 							<thead> 
 								<tr class="info">

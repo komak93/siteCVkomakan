@@ -28,9 +28,9 @@
 
 <head>
 	<?php
-			$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '$utilisateur' ");
-			$ligne = $sql->fetch(); // va chercher !
-		?>
+		$sql = $pdoCV->query(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '$utilisateur' ");
+		$ligne = $sql->fetch(); // va chercher !
+	?>
 	
    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,11 +42,13 @@
 
      <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+	 
+	<!-- My CSS -->
+	<link rel="stylesheet" href="css/style.css">
+	 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
 	
-	<link rel="stylesheet" href="css/competence.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

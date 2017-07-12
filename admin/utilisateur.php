@@ -4,33 +4,7 @@
 <?php
 	
 	session_start();
-	
-		if(isset($_SESSION['connexion']) && 
-		$_SESSION['connexion']=='connecté'){
-			$id_utilisateur=$_SESSION['id_utilisateur'];
-			$prenom=$_SESSION['prenom'];
-			$nom=$_SESSION['nom'];
-			
-			echo $_SESSION['connexion'];
-			
-		}else{
-			header('location: login.php');
-			
-		}
-		
-		if(isset($_GET['quitter'])){
-			$_SESSION['connexion']='';
-			$_SESSION['id_utilisateur']='';
-			$_SESSION['prenom']='';
-			$_SESSION['nom']='';
-			
-			unset($_SESSION['connexion']);
-			session_destroy();
-			
-			header('location: login.php');
-		}
-		
-		$utilisateur = $_SESSION['id_utilisateur'];
+	$utilisateur = $_SESSION['id_utilisateur'];
 
 ?>
 <!DOCTYPE html>
@@ -68,7 +42,7 @@
 
 </head>
 
-<body id="bground">
+<body>
 <!-------------------------------------------------------------------------------------------------
 									NAV (SIDEBAR) DEBUT
 -------------------------------------------------------------------------------------------------->
@@ -80,14 +54,78 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
+				<?php
+					$sql = $pdoCV->prepare(" SELECT * FROM t_utilisateurs WHERE id_utilisateur = '$utilisateur' ");
+					$sql->execute();
+					$nb_info = $sql->rowCount();
+				?>
                     <div class="col-lg-12">
-                        <h1 class="index">ADMIN :: <?= $ligne['prenom'].' '.$ligne['nom']; ?> Site CV</h1>
-							
-							<code class="index"><?php 
-								$datetime = date("d-m-Y H:i:s");
-								echo $datetime; 
-							?></code>
-						
+                        <h1 class="index">Utilisateur Site CV :: <?= $ligne['prenom'].' '.$ligne['nom']; ?></h1>
+							<h2 class="user">Modification d'une compétence</h2>
+                        <table id="tableau" class="table table-striped">
+							<thead> 
+								<tr class="info">
+									<th id="utilisateur"scope="col">Informations</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php while($ligne = $sql->fetch()){ ?>
+								<tr>
+									<td>
+										<?= $ligne['pseudo'];?>
+									</td>
+								</tr>
+								<tr>		
+									<td>	
+										<?= $ligne['email'];?>
+									</td>
+								</tr>
+								<tr>	
+									<td>
+										<?= $ligne['telephone'];?>
+									</td>
+								</tr>	
+								<tr>	
+									<td>
+										<?= $ligne['age'];?>
+									</td>
+								</tr>
+								<tr>		
+									<td>	
+										<img src="image/<?= $ligne['avatar'];?>">
+									</td>
+								</tr>
+								<tr>		
+									<td>	
+										<?= $ligne['statut_marital'];?>
+									</td>
+								</tr>
+								<tr>		
+									<td>	
+										<?= $ligne['adresse'];?>
+									</td>
+								</tr>
+								<tr>		
+									<td>
+										<?= $ligne['code_postal'];?>
+									</td>
+								</tr>	
+								<tr>		
+									<td>	
+										<?= $ligne['ville'];?>
+									</td>
+								</tr>	
+								<tr>		
+									<td>	
+										<?= $ligne['pays'];?>
+									</td>
+								</tr>					
+								<tr>		
+									<td><a href="modif/modif_utilisateur.php?id_utilisateur=<?= $ligne['id_utilisateur']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+								</tr>
+								<?php } ?>
+							</tbody>
+						</table>
                         <br />
                         <br />
                         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Affichage du Menu</a>
