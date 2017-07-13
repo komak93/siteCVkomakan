@@ -91,7 +91,7 @@
 								<tr class="info">
 									<th scope="col">Titres</th>
 									<th scope="col">Sous-titres</th>
-									<th scope="col">Description</th>
+									<th class="centrage" scope="col">Description</th>
 									<th scope="col">Dates</th>
 									<th scope="col">Modifier</th>
 									<th scope="col">Supprimer</th>
@@ -151,7 +151,7 @@
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="description_e">Description</label>
 								<div class="col-md-4">                     
-									<textarea name="description_e" cols="80" rows="4" class="form-control" id="description_e" placeholder="description de l'expérience"></textarea>
+									<textarea name="description_e" cols="80" rows="4" class="form-control" id="description" placeholder="description de l'expérience"></textarea>
 								</div>
 							</div>
 							
@@ -200,7 +200,7 @@
 	<script src="js/mon_js.js" ></script>
 	<script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
 	<script>
-            CKEDITOR.replace( 'description_e' );
+            CKEDITOR.replace( 'description' );
     </script>
 
 </body>

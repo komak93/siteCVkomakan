@@ -160,7 +160,7 @@
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="description_e">Description</label>
 								<div class="col-md-4">                     
-									<textarea name="description_e" cols="80" rows="4" class="form-control"><?= $ligne_experience['description_e']; ?> </textarea>
+									<textarea name="description_e" id="description" cols="80" rows="4" class="form-control"><?= $ligne_experience['description_e']; ?> </textarea>
 								</div>
 							</div>
 
@@ -199,6 +199,10 @@
     });
     </script>
 	<script src="../js/mon_js.js" ></script>
+	<script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
+	<script>
+            CKEDITOR.replace( 'description' );
+    </script>
 
 </body>
 
