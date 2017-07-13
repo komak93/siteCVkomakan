@@ -1,5 +1,8 @@
 <?php require '../connexion/connexion.php'; ?>
 <?php
+	
+	session_start();
+	$utilisateur = $_SESSION['id_utilisateur'];
 	//gestion de contenu
 	//insertion d'une compétence
 	if(isset($_POST['titre_r'])){//si on récupère une nelle expérience
@@ -9,7 +12,7 @@
             	$description_r = addslashes($_POST['description_r']);
             	$dates_r = addslashes($_POST['dates_r']);
 				
-				$pdoCV->exec(" INSERT INTO t_realisations VALUES (NULL, '$titre_r', '$sous_titre_r', '$description_r', '$dates_r', '1') ");//mettre $id_utilisateur quand on l'aura en variable de session
+				$pdoCV->exec(" INSERT INTO t_realisations VALUES (NULL, '$titre_r', '$sous_titre_r', '$description_r', '$dates_r', '$utilisateur') ");//mettre $id_utilisateur quand on l'aura en variable de session
 				header("location: ../admin/realisations.php");
 				exit();
 			}//ferme le if
@@ -23,9 +26,7 @@
 		$pdoCV->query($sql); // ou on peut avec exec
 		header("location: ../admin/realisations.php ");
 	}
-	
-	session_start();
-	$utilisateur = $_SESSION['id_utilisateur'];
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -36,7 +37,7 @@
 		$ligne = $sql->fetch(); // va chercher !
 	?>
 	
-   <meta charset="utf-8">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
     <meta name="description" content="">
@@ -78,7 +79,7 @@
             <div class="container-fluid">
                 <div class="row">
 					<?php
-						$sql = $pdoCV->prepare(" SELECT * FROM t_realisations WHERE id_utilisateur = '$utilisateur' ");
+						$sql = $pdoCV->prepare(" SELECT * FROM t_realisations WHERE utilisateur_id = '$utilisateur' ");
 						$sql->execute();
 						$nb_realisation = $sql->rowCount();
 					?>
